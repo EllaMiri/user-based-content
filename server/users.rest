@@ -10,7 +10,7 @@ POST http://localhost:3000/users
  Content-Type: application/json
 
  {
-     "username": "Bla",
+     "username": "Ella",
      "password": "hejsan"
  }
 
@@ -28,3 +28,16 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3000/users/d8e3c271-3c11-4229-b116-4de7698c08ea
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "Ella",
+    "password": "$2b$10$7z.Ja.TYNg4UIkmVSglx2ehx79V6/lxd.R08AxOa0fadahJf2fKYm"
+}
+
+###
+
+GET http://localhost:3000/login
