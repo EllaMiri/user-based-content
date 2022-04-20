@@ -1,0 +1,28 @@
+GET http://localhost:3000/posts
+
+###
+
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "username": "Anna",
+    "title": "Cat needs new home",
+    "description": "Found on the street"
+}
+
+###
+
+PUT http://localhost:3000/posts/ce5710ae-54c3-4e4d-9a59-5e26f951a86e
+Content-Type: application/json
+
+{
+    "username": "CoolKid",
+    "title": "Cat loves milk",
+    "description": "If you love your cat let it drink milk!",
+    "id": "ce5710ae-54c3-4e4d-9a59-5e26f951a86e"
+}
+
+###
+
+DELETE http://localhost:3000/posts/d52ffe7b-151e-4431-bdb5-23f70f12a21f

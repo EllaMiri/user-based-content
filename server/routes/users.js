@@ -1,8 +1,19 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
+import cookieSession from "cookie-session";
 
-const routes = express.Router();
 const app = express();
+app.use(
+  cookieSession({
+    secret: "aVeryS3cr3tK3y",
+    maxAge: 1000 * 10,
+    sameSite: "strict",
+    httpOnly: true,
+    secure: false,
+  })
+);
+const routes = express.Router();
 
 app.use(express.json());
 
@@ -20,11 +31,19 @@ routes.get("/users", (req, res) => {
   res.json(users);
 });
 
-routes.post("/users", (req, res) => {
-  const user = req.body;
-  res.status(201);
-  res.send("User created!");
-  users.push({ ...user, id: uuidv4() });
+routes.post("/users", async (req, res) => {
+  if (users.find((user) => user.username === req.body.username)) {
+    return res.status(409).send("Username already exists");
+  }
+
+  // Otherwise hash password and save
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  users.push({
+    username: req.body.username,
+    password: hashedPassword,
+    id: uuidv4(),
+  });
+  res.status(201).send("User created");
 });
 
 routes.put("/users/:id", (req, res) => {
@@ -83,6 +102,31 @@ routes.delete("/users/:id", (req, res) => {
     res.status(200);
     res.send("User deleted!");
   }
+});
+
+routes.post("/login", async (req, res) => {
+  const user = users.find((user) => user.username === req.body.username);
+  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+    return res.status(401).send("Wrong password or username");
+  }
+
+  if (req.session.id) {
+    return res.send("Already logged in");
+  }
+  req.session.id = uuidv4();
+  req.session.username = user.username;
+  req.session.loginDate = new Date();
+  req.session.role = undefined;
+  res.send("Successful login");
+});
+
+routes.get("/login", (req, res) => {
+  // Check if we are authorized (e.g logged in)
+  if (!req.session.id) {
+    return res.status(401).send("You are not logged in");
+  }
+  // Send info about the session (a cookie stored on the clinet)
+  res.send(req.session);
 });
 
 // module.exports = routes;
