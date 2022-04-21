@@ -2,7 +2,7 @@ GET http://localhost:3000/user
 
 ###
 
-GET http://localhost:3000/user/e55d02e6-6aa5-4f34-b5b2-1194e2f04a60
+GET http://localhost:3000/user/626152f26dc07ba40c14e3b5
 
 ###
 
@@ -10,32 +10,32 @@ POST http://localhost:3000/user
  Content-Type: application/json
 
  {
-     "username": "Ella",
-     "password": "hejsan"
+     "username": "Åsna",
+     "password": "hello"
  }
 
 ###
 
-PUT http://localhost:3000/user/e55d02e6-6aa5-4f34-b5b2-1194e2f04a60
+PUT http://localhost:3000/user/6261509d3e48f1cbb946d87c
 Content-Type: application/json
 
 {
     "username": "Åsna",
     "password": "123",
-    "id": "a4edef94-d5ac-44d5-9a68-61556b9d3f92"
+    "id": "6261509d3e48f1cbb946d87c"
 }
 
 ###
 
-DELETE http://localhost:3000/user/d8e3c271-3c11-4229-b116-4de7698c08ea
+DELETE http://localhost:3000/user/6261509d3e48f1cbb946d87c
 
 ###
 POST http://localhost:3000/user/login
 Content-Type: application/json
 
 {
-    "username": "Ella",
-    "password": "hejsan"
+    "username": "Åsna",
+    "password": "hello"
 }
 
 ###
