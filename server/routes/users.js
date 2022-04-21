@@ -1,61 +1,56 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
-import cookieSession from "cookie-session";
+import userModel from "../models/user.model.js";
 
 const routes = express.Router();
 
-let users = [
-  {
-    username: "Anna",
-    password: "hund",
-    id: uuidv4(),
-  },
-];
-
-routes.get("/", (req, res) => {
-  console.log(users);
-  res.status(200);
-  res.json(users);
+routes.get("/", async (req, res) => {
+  try {
+    const users = await userModel.find({});
+    res.json(users);
+  } catch (err) {
+    console.log(err);
+    res.send("Other error...");
+  }
 });
 
 routes.post("/", async (req, res) => {
-  if (users.find((user) => user.username === req.body.username)) {
-    return res.status(409).send("Username already exists");
-  }
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = new userModel({
+      username: req.body.username,
+      password: hashedPassword,
+    });
+    console.log(user);
+    await user.save();
 
-  // Otherwise hash password and save
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  users.push({
-    username: req.body.username,
-    password: hashedPassword,
-    id: uuidv4(),
-  });
-  res.status(201).send("User created");
+    res.json(user);
+  } catch (err) {
+    if (err.code == 11000) {
+      res.send("Username already exists...");
+      return;
+    }
+    res.send("Other error...");
+  }
 });
 
-routes.put("/:id", (req, res) => {
-  const userId = req.body.id;
-  const { username, password } = req.body;
+routes.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const foundUser = users.find((user) => user.id === userId);
+    const user = await userModel.findByIdAndUpdate(id, req.body);
 
-  if (!foundUser) {
-    res.status(404);
-    res.send("There is no user with that ID to update.");
-  } else {
-    users = users.map(function (user) {
-      if (user.id === userId) {
-        return {
-          username,
-          password,
-          id: user.id,
-        };
-      }
-      return user;
+    res.json({
+      old: user,
+      new: req.body,
     });
-    res.status(200);
-    res.send("User updated!");
+  } catch (err) {
+    if (err.code == 11000) {
+      res.send("Username already exists...");
+      return;
+    }
+    res.send("Other error...");
   }
 });
 
@@ -71,30 +66,27 @@ routes.get("/:id", (req, res) => {
   }
 });
 
-routes.delete("/users/:id", (req, res) => {
-  //   const { id } = req.params;
-  //   users = users.filter((users) => users.id !== id);
-
-  //   res.send(`User with ${id} has been deleted`);
-  const userId = req.params.id;
-
-  const foundUser = users.find((user) => user.id === userId);
-
-  if (!foundUser) {
-    res.status(404);
-    res.send("There is no user with that ID to delete.");
-  } else {
-    users = users.filter(function (user) {
-      return user.id !== userId;
-    });
-    res.status(200);
-    res.send("User deleted!");
+routes.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const removedUser = await userModel.findByIdAndRemove(id);
+    if (!removedUser) {
+      res.send("ID doesn't exist!");
+      return;
+    }
+    res.send("User removed!");
+  } catch (err) {
+    res.send("Other error...");
   }
 });
 
 routes.post("/login", async (req, res) => {
-  const user = users.find((user) => user.username === req.body.username);
-  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+  // const user = req.body;
+  const foundUser = await userModel.findOne({ username: req.body.username });
+
+  const passCheck = await bcrypt.compare(req.body.password, foundUser.password);
+
+  if (!foundUser || !passCheck) {
     return res.status(401).send("Wrong password or username");
   }
 
@@ -102,18 +94,17 @@ routes.post("/login", async (req, res) => {
     return res.send("Already logged in");
   }
   req.session.id = uuidv4();
-  req.session.username = user.username;
+  req.session.username = foundUser.username;
   req.session.loginDate = new Date();
   req.session.role = undefined;
   res.send("Successful login");
 });
 
 routes.get("/login", (req, res) => {
-  // Check if we are authorized (e.g logged in)
   if (!req.session.id) {
     return res.status(401).send("You are not logged in");
   }
-  // Send info about the session (a cookie stored on the clinet)
+
   res.send(req.session);
 });
 
