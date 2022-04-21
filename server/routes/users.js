@@ -3,19 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import cookieSession from "cookie-session";
 
-const app = express();
-app.use(
-  cookieSession({
-    secret: "aVeryS3cr3tK3y",
-    maxAge: 1000 * 10,
-    sameSite: "strict",
-    httpOnly: true,
-    secure: false,
-  })
-);
 const routes = express.Router();
-
-app.use(express.json());
 
 let users = [
   {
