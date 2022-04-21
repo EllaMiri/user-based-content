@@ -19,8 +19,8 @@ app.use(
   })
 );
 
-app.use("/", userRouter);
-app.use("/", postRouter);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://${host}:${port}`);

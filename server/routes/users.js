@@ -13,13 +13,13 @@ let users = [
   },
 ];
 
-routes.get("/users", (req, res) => {
+routes.get("/", (req, res) => {
   console.log(users);
   res.status(200);
   res.json(users);
 });
 
-routes.post("/users", async (req, res) => {
+routes.post("/", async (req, res) => {
   if (users.find((user) => user.username === req.body.username)) {
     return res.status(409).send("Username already exists");
   }
@@ -34,7 +34,7 @@ routes.post("/users", async (req, res) => {
   res.status(201).send("User created");
 });
 
-routes.put("/users/:id", (req, res) => {
+routes.put("/:id", (req, res) => {
   const userId = req.body.id;
   const { username, password } = req.body;
 
@@ -59,7 +59,7 @@ routes.put("/users/:id", (req, res) => {
   }
 });
 
-routes.get("/users/:id", (req, res) => {
+routes.get("/:id", (req, res) => {
   const { id } = req.params;
   const findUser = users.find((user) => user.id === id);
 

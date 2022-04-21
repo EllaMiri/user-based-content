@@ -13,20 +13,20 @@ let posts = [
   },
 ];
 
-routes.get("/posts", (req, res) => {
+routes.get("/", (req, res) => {
   console.log(posts);
   res.status(200);
   res.json(posts);
 });
 
-routes.post("/posts", (req, res) => {
+routes.post("/", (req, res) => {
   const post = req.body;
   res.status(201);
   res.send("Post created!");
   posts.push({ ...post, id: uuidv4(), date: new Date() });
 });
 
-routes.put("/posts/:id", (req, res) => {
+routes.put("/:id", (req, res) => {
   const postId = req.body.id;
   const { username, title, description, id, date } = req.body;
 
@@ -65,7 +65,7 @@ routes.put("/posts/:id", (req, res) => {
 //   }
 // });
 
-routes.delete("/posts/:id", (req, res) => {
+routes.delete("/:id", (req, res) => {
   //   const { id } = req.params;
   //   users = users.filter((users) => users.id !== id);
 
@@ -76,13 +76,13 @@ routes.delete("/posts/:id", (req, res) => {
 
   if (!foundPost) {
     res.status(404);
-    res.send("There is no user with that ID to delete.");
+    res.send("There is no post with that ID to delete.");
   } else {
     posts = posts.filter(function (post) {
       return post.id !== postId;
     });
     res.status(200);
-    res.send("User deleted!");
+    res.send("Post deleted!");
   }
 });
 
