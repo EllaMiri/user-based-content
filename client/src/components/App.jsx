@@ -7,17 +7,17 @@ import Login from "./login";
 import Register from "./register";
 
 function App() {
-    return (
-        <div>
-            <Footer />
-            <Routes>
-                <Route path="/" element={<Header />} />
-                <Route path="/" element={<Main />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;
