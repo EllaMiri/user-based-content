@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-export default function addPost() {
+export default function AddPost() {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const addPostForm = event.currentTarget;
+    if (addPostForm.checkValidaity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
+  };
   return (
     <div>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
