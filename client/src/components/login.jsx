@@ -1,5 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     return (
@@ -7,12 +7,12 @@ export default function Login() {
             <h2>Log in</h2>
             <form>
                 <label>Username</label>
-                <input name="username" type="text" />
+                <input name="username" type="text"/>
                 <label>Password</label>
-                <input name="password" type="text" />
-                {/* <Link to="/login">
-                    <input type="submit">Log in</input>
-                </Link> */}
+                <input name="password" type="text"/>
+                {/*<Link to="/login">*/}
+                {/*    <input type="submit">Log in</input>*/}
+                {/*</Link>*/}
             </form>
         </div>
     )
