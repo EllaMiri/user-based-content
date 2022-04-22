@@ -1,18 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../components/register.css";
+import axios from "axios";
 import {Form, Button, Row, Col} from "react-bootstrap";
+
 
 export default function Register() {
   const [validated, setValidated] = useState(false);
 
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = (event) => {
     const loginForm = event.currentTarget;
+
+    const registered = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
     if (loginForm.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
+    axios
+      .post("http://localhost:4000/user/", registered)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setUsername("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -27,6 +52,8 @@ export default function Register() {
             required
             type="text"
             placeholder="användarnamn"
+            onChange={(e) => setUsername(e.currentTarget.value)}
+            value={username}
           />
           <Form.Control.Feedback type="invalid">
             Välj ett användarnamn
@@ -41,6 +68,8 @@ export default function Register() {
             required
             type="text"
             placeholder="email"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            value={email}
           />
           <Form.Control.Feedback type="invalid">
             Skriv in din email
@@ -55,14 +84,19 @@ export default function Register() {
             required
             type="text"
             placeholder="lösenord"
+            onChange={(e) => setPassword(e.currentTarget.value)}
+            value={password}
           />
           <Form.Control.Feedback type="invalid">
             Skriv in ett lösenord
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
-      <Button variant="success" type="submit">Registrera</Button>
       </Form>
+
+      <Button type="submit" variant="success" value="Submit">
+        Registrera
+      </Button>
 
 
       <Link to="/login">

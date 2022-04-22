@@ -3,6 +3,7 @@ import userRouter from "./routes/users.js";
 import postRouter from "./routes/posts.js";
 import cookieSession from "cookie-session";
 import mongoose from "mongoose";
+import cors from "cors";
 
 mongoose.connect(
   "mongodb://localhost:27017/database",
@@ -16,10 +17,11 @@ mongoose.connect(
 );
 
 const app = express();
-const port = 3000;
+const port = 4000;
 const host = "localhost";
 
 app.use(express.json());
+app.use(cors());
 
 app.use(
   cookieSession({
