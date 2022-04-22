@@ -1,6 +1,7 @@
 import React from "react";
 import "./main.css";
 import AddPost from "../addpost";
+import { Button } from "react-bootstrap";
 
 function Main() {
   // function toogle() {
@@ -15,7 +16,7 @@ function Main() {
   return (
     <div className="main">
       <h3>Alla djurannonser</h3>
-      <button>Lägg upp en annons</button>
+      <Button variant="success">Lägg upp en annons</Button>
       <div id="menu">
         <AddPost />
       </div>
