@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import {Button, Form, Row, Col} from "react-bootstrap";
 import './addpost.css';
+import useFormValidation from "../hooks/formValidation";
+
 
 export default function AddPost() {
+// let [validated, setValidated] = useFormValidation()
+
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (event) => {
@@ -13,7 +17,7 @@ export default function AddPost() {
         }
 
         setValidated(true);
-    };
+    }
 
   return (
     <div className="formAddPost">
