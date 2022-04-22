@@ -1,0 +1,17 @@
+.main {
+    background-image: url('../../img/background.png');
+    background-size: cover;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.posts {
+    height: 5rem;
+    width: 100%;
+    border: 5px solid rgb(170, 140, 140);
+    background-color: white;
+    opacity: 0.9;
+
+}
