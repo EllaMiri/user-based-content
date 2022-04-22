@@ -9,8 +9,6 @@ import Register from "./register";
 function App() {
     return (
         <div>
-            <Header />
-            <Main />
             <Footer />
             <Routes>
                 <Route path="/" element={<Header />} />
