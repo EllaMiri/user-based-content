@@ -15,24 +15,38 @@ routes.get("/", async (req, res) => {
   }
 });
 
-routes.post("/", async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user = new userModel({
-      username: req.body.username,
-      password: hashedPassword,
+routes.post("/", (req, res) => {
+  // try {
+  //   const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  //   const user = new userModel({
+  //     username: req.body.username,
+  //     password: hashedPassword,
+  //   });
+  //   console.log(user);
+  //   await user.save();
+  //   res.json(user);
+  // } catch (err) {
+  //   if (err.code == 11000) {
+  //     res.send("Username already exists...");
+  //     return;
+  //   }
+  //   res.send("Other error...");
+  // }
+  const registeredUser = new userModel({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  registeredUser
+    .save()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((error) => {
+      if (error.code === 11000) {
+        res.send("Username already exists...");
+      }
     });
-    console.log(user);
-    await user.save();
-
-    res.json(user);
-  } catch (err) {
-    if (err.code == 11000) {
-      res.send("Username already exists...");
-      return;
-    }
-    res.send("Other error...");
-  }
 });
 
 routes.put("/:id", async (req, res) => {
