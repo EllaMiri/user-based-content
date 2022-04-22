@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../components/register.css";
-import { Form, Button } from "react-bootstrap";
 import axios from "axios";
+import {Form, Button, Row, Col} from "react-bootstrap";
+
 
 export default function Register() {
   const [validated, setValidated] = useState(false);
@@ -13,11 +14,13 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     const loginForm = event.currentTarget;
+
     const registered = {
       username: username,
       email: email,
       password: password,
     };
+
     if (loginForm.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -42,12 +45,11 @@ export default function Register() {
       <h2>Registrera ett konto</h2>
 
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group controlId="validation1">
+        <Row className="md-3">
+        <Form.Group as={Col} md="4" controlId="validation1">
           <Form.Label>Användarnamn</Form.Label>
           <Form.Control
             required
-            isInvalid
-            name="username"
             type="text"
             placeholder="användarnamn"
             onChange={(e) => setUsername(e.currentTarget.value)}
@@ -57,13 +59,13 @@ export default function Register() {
             Välj ett användarnamn
           </Form.Control.Feedback>
         </Form.Group>
+        </Row>
 
-        <Form.Group controlId="validation2">
+        <Row className="md-3">
+        <Form.Group as={Col} md="4" controlId="validation2">
           <Form.Label>Email</Form.Label>
           <Form.Control
             required
-            isInvalid
-            name="email"
             type="text"
             placeholder="email"
             onChange={(e) => setEmail(e.currentTarget.value)}
@@ -73,13 +75,13 @@ export default function Register() {
             Skriv in din email
           </Form.Control.Feedback>
         </Form.Group>
+        </Row>
 
-        <Form.Group controlId="validation2">
+      <Row className="md-3">
+        <Form.Group as={Col} md="4" controlId="validationCustom3">
           <Form.Label>Lösenord</Form.Label>
           <Form.Control
             required
-            isInvalid
-            name="password"
             type="text"
             placeholder="lösenord"
             onChange={(e) => setPassword(e.currentTarget.value)}
@@ -89,10 +91,13 @@ export default function Register() {
             Skriv in ett lösenord
           </Form.Control.Feedback>
         </Form.Group>
+      </Row>
       </Form>
+
       <Button type="submit" variant="success" value="Submit">
         Registrera
       </Button>
+
 
       <Link to="/login">
         <p>Logga in?</p>

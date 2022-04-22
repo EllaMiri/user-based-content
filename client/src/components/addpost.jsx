@@ -1,26 +1,32 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import {Button, Form, Row, Col} from "react-bootstrap";
+import './addpost.css';
+import useFormValidation from "../hooks/formValidation";
+
 
 export default function AddPost() {
-  const [validated, setValidated] = useState(false);
+// let [validated, setValidated] = useFormValidation()
 
-  const handleSubmit = (event) => {
-    const addPostForm = event.currentTarget;
-    if (addPostForm.checkValidaity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+        const addPostform = event.currentTarget;
+        if (addPostform.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        setValidated(true);
     }
-    setValidated(true);
-  };
+
   return (
-    <div>
+    <div className="formAddPost">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group controlId="validation1">
+          <Row className="md-3">
+        <Form.Group as={Col} md="12" controlId="validation1">
           <Form.Label>Title</Form.Label>
           <Form.Control
             required
-            isInvalid
-            name="title"
             type="text"
             placeholder="title"
           />
@@ -28,16 +34,25 @@ export default function AddPost() {
             Skriv in ditt användarnamn
           </Form.Control.Feedback>
         </Form.Group>
+          </Row>
+
+          <Row className="md-3">
+          <Form.Group as={Col} md="20" controlId="validation2">
+              <Form.Label>
+                  Söker du nytt hem eller vill du adoptera? Information om ditt djur/vad
+                  du söker.
+              </Form.Label>
+              <Form.Control
+                  required
+                  as="textarea"
+                  type="text"
+              />
+          </Form.Group>
+      </Row>
+          <Button variant="success" type="submit">Lägg till</Button>
       </Form>
 
-      <label>Title</label>
-      <input type="text" placeholder="Title"></input>
-      <label>
-        Söker du nytt hem eller vill du adoptera? Information om ditt djur/vad
-        du söker.
-      </label>
-      <textarea rows="4" cols="50"></textarea>
-      <Button variant="success">Lägg till</Button>
+
     </div>
   );
 }
