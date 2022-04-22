@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Button, Form, Row, Col} from "react-bootstrap";
+import './addpost.css';
 
 export default function AddPost() {
     const [validated, setValidated] = useState(false);
@@ -15,10 +16,10 @@ export default function AddPost() {
     };
 
   return (
-    <div>
+    <div className="formAddPost">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="md-3">
-        <Form.Group as={Col} md="4" controlId="validation1">
+        <Form.Group as={Col} md="12" controlId="validation1">
           <Form.Label>Title</Form.Label>
           <Form.Control
             required
@@ -32,7 +33,7 @@ export default function AddPost() {
           </Row>
 
           <Row className="md-3">
-          <Form.Group as={Col} md="4" controlId="validation2">
+          <Form.Group as={Col} md="20" controlId="validation2">
               <Form.Label>
                   Söker du nytt hem eller vill du adoptera? Information om ditt djur/vad
                   du söker.
