@@ -19,7 +19,7 @@ routes.post("/", async (req, res) => {
     const post = new postModel({
       username: req.body.username,
       title: req.body.title,
-      body: req.body.body,
+      text: req.body.text,
       date: req.body.date,
     });
     console.log(post);
