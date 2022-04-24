@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 .posts {
-  height: 5rem;
+  height: auto;
   width: 100%;
   border: 5px solid rgb(170, 140, 140);
   background-color: white;

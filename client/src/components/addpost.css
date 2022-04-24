@@ -1,6 +1,11 @@
 .formAddPost {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
 
+.remove-btn {
+  cursor: pointer;
+  padding-left: 0.7rem;
+  margin-top: 0.4rem;
 }
