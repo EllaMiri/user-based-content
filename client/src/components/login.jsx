@@ -31,6 +31,7 @@ export default function Login() {
       });
     setUsername("");
     setPassword("");
+    console.log(username, password);
   };
 
   return (

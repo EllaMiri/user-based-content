@@ -15,6 +15,7 @@ routes.get("/", async (req, res) => {
 });
 
 routes.post("/", secure, async (req, res) => {
+  console.log(req.session.user);
   try {
     const post = new postModel({
       user: req.session.user,

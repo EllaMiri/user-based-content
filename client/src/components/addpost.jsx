@@ -15,6 +15,7 @@ export default function AddPost() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     const post = {
       title: postTitle,
       text: postText,
