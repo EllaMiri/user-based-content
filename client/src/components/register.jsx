@@ -40,14 +40,16 @@ export default function Register() {
   };
 
   return (
-    <div className="style">
+    <div className="registerContainer">
+      <div className="background-register-box">
       <h2>Registrera ett konto</h2>
 
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="md-3">
-          <Form.Group as={Col} md="4" controlId="validation1">
+          <Form.Group as={Col} md="12" controlId="validation1">
             <Form.Label>Användarnamn</Form.Label>
             <Form.Control
+            size="lg"
               required
               type="text"
               placeholder="användarnamn"
@@ -61,9 +63,10 @@ export default function Register() {
         </Row>
 
         <Row className="md-3">
-          <Form.Group as={Col} md="4" controlId="validation2">
+          <Form.Group as={Col} md="12" controlId="validation2">
             <Form.Label>Email</Form.Label>
             <Form.Control
+            size="lg"
               required
               type="text"
               placeholder="email"
@@ -77,9 +80,10 @@ export default function Register() {
         </Row>
 
         <Row className="md-3">
-          <Form.Group as={Col} md="4" controlId="validationCustom3">
+          <Form.Group as={Col} md="12" controlId="validationCustom3">
             <Form.Label>Lösenord</Form.Label>
             <Form.Control
+              size="lg"
               required
               type="text"
               placeholder="lösenord"
@@ -91,14 +95,15 @@ export default function Register() {
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
-        <Button type="submit" variant="success" value="Submit">
+        <Button className="submitBtn" type="submit" variant="success" value="Submit">
           Registrera
         </Button>
       </Form>
 
-      <Link to="/login">
-        <p>Logga in?</p>
+      <Link to="/login" style = {{textDecoration:"none"}}>
+        <span>Logga in?</span>
       </Link>
+    </div>
     </div>
   );
 }

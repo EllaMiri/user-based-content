@@ -10,14 +10,24 @@ h1 {
   font-family: "Limelight", cursive;
   font-size: 3rem;
   color: black;
+  padding-top: 2rem;
+   padding-bottom: 1rem;
   padding-left: 2rem;
+ 
 }
 
 span {
   color: black;
   padding-right: 2rem;
+
+}
+  span:hover {
+  color: white;
 }
 
+
+
 a {
-  text-decoration: none;
+   text-decoration: none; 
 }
+

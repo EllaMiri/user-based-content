@@ -16,46 +16,50 @@ export default function Login() {
   };
 
   return (
-    <div className="style">
+    <div className="loginContainer">
+      <div className="background-login-box">
       <h2>Logga in</h2>
 
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
-          <Form.Group as={Col} md="4" controlId="validation1">
+          <Form.Group as={Col} md="12" controlId="validation1">
           <Form.Label>Användarnamn</Form.Label>
           <Form.Control
+            size="lg"
             required
             type="text"
             placeholder="användarnamn"
           />
-          <Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
             Skriv in ditt användarnamn
           </Form.Control.Feedback>
         </Form.Group>
         </Row>
 
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validation2">
+            <Form.Group as={Col} md="12" controlId="validation2">
               <Form.Label>Lösenord</Form.Label>
               <Form.Control
+                  size="lg"
                   required
                   type="text"
                   placeholder="lösenord"
               />
-              <Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
                 Skriv in ditt lösenord
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
 
-        <Button variant="success" type="submit">
+        <Button className="loginBtn" variant="success" type="submit">
           Logga in
         </Button>
       </Form>
 
-      <Link to="/register">
-        <p>Inte registrerad?</p>
+      <Link to="/register" style = {{textDecoration:"none"}}>
+        <span>Inte registrerad?</span>
       </Link>
-      <p>Glömt lösenord?</p>
+      <span>Glömt lösenord?</span>
+      </div>
     </div>
   )}
