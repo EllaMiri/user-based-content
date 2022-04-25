@@ -1,5 +1,5 @@
 .main {
-  background-image: url("../../img/Background.jpg") ;
+  background-image: url("../../img/Background.jpg");
   background-size: cover;
   height: 100vh;
 
@@ -16,10 +16,11 @@
 .posts {
   height: 100%;
   width: 20rem;
- border-radius: .3rem;
+  border-radius: 0.3rem;
   background-color: white;
   opacity: 0.9;
   padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 .postContainer {
@@ -27,7 +28,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
 }
 
 .allPosts {
