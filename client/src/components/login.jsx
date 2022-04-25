@@ -18,32 +18,32 @@ export default function Login() {
   return (
     <div className="loginContainer">
       <div className="background-login-box">
-      <h2>Logga in</h2>
+        <h2>Logga in</h2>
 
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Row className="mb-3">
-          <Form.Group as={Col} md="12" controlId="validation1">
-          <Form.Label>Användarnamn</Form.Label>
-          <Form.Control
-            size="lg"
-            required
-            type="text"
-            placeholder="användarnamn"
-          />
-          <Form.Control.Feedback type="invalid">
-            Skriv in ditt användarnamn
-          </Form.Control.Feedback>
-        </Form.Group>
-        </Row>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="12" controlId="validation1">
+              <Form.Label>Användarnamn</Form.Label>
+              <Form.Control
+                size="lg"
+                required
+                type="text"
+                placeholder="användarnamn"
+              />
+              <Form.Control.Feedback type="invalid">
+                Skriv in ditt användarnamn
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
 
           <Row className="mb-3">
             <Form.Group as={Col} md="12" controlId="validation2">
               <Form.Label>Lösenord</Form.Label>
               <Form.Control
-                  size="lg"
-                  required
-                  type="text"
-                  placeholder="lösenord"
+                size="lg"
+                required
+                type="password"
+                placeholder="lösenord"
               />
               <Form.Control.Feedback type="invalid">
                 Skriv in ditt lösenord
@@ -51,15 +51,16 @@ export default function Login() {
             </Form.Group>
           </Row>
 
-        <Button className="loginBtn" variant="success" type="submit">
-          Logga in
-        </Button>
-      </Form>
+          <Button className="loginBtn" variant="success" type="submit">
+            Logga in
+          </Button>
+        </Form>
 
-      <Link to="/register" style = {{textDecoration:"none"}}>
-        <span>Inte registrerad?</span>
-      </Link>
-      <span>Glömt lösenord?</span>
+        <Link to="/register" style={{ textDecoration: "none" }}>
+          <span>Inte registrerad?</span>
+        </Link>
+        <span>Glömt lösenord?</span>
       </div>
     </div>
-  )}
+  );
+}
