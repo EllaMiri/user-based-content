@@ -1,5 +1,5 @@
 .main {
-  background-image: url("../../img/Background.jpg");
+  background-image: url("../../img/Background.jpg") ;
   background-size: cover;
   height: 100vh;
 
@@ -7,10 +7,35 @@
   align-items: center;
   flex-direction: column;
 }
+
+.background-box {
+  background-color: rgba(101, 146, 100, 0.5);
+  width: 100vw;
+  height: 100vh;
+}
 .posts {
-  height: auto;
-  width: 100%;
-  border: 5px solid rgb(170, 140, 140);
+  height: 100%;
+  width: 20rem;
+ border-radius: .3rem;
   background-color: white;
   opacity: 0.9;
+  padding: 1rem;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.allPosts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainTitle {
+  margin-top: 1.5rem;
 }

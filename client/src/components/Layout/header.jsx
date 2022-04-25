@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 function Header() {
   return (
     <div className="header">
-      <Link to="/">
+      <Link to="/" style = {{textDecoration:"none"}}>
         <h1>Cats and dogs</h1>
       </Link>
 
-      <Link to="/login">
+      <Link to="/login" style = {{textDecoration:"none"}}>
         <span>Logga in/Registrera dig</span>
       </Link>
     </div>

@@ -4,9 +4,9 @@ import "./footer.css";
 function Footer() {
   return (
     <div className="footer">
-      <span className="namesFooter">
+      <p className="namesFooter">
         ©Anna Özmehak, Ella Larsson, Jannie Bäckman Kuurne
-      </span>
+      </p>
     </div>
   );
 }

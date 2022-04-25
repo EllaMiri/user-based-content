@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col, Collapse } from "react-bootstrap";
 import "./addpost.css";
-import useFormValidation from "../hooks/formValidation";
+// import useFormValidation from "../hooks/formValidation";
 import axios from "axios";
 
 export default function AddPost() {
   // let [validated, setValidated] = useFormValidation()
+  const [open, setOpen] = useState(false)
 
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
@@ -67,15 +68,27 @@ export default function AddPost() {
   };
 
   return (
-    <div className="formAddPost">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+    <>
+    <Button onClick={() => setOpen(!open)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open}
+        variant="success"
+        className="newBtn"
+      >
+        Ny annons
+      </Button>
+      <Collapse in={open}>
+       
+    <div id="example-collapse-text" className="addPostContainer">
+      <Form className="formAddPost" noValidate validated={validated} onSubmit={handleSubmit} >
         <Row className="md-3">
           <Form.Group as={Col} md="12" controlId="validation1">
-            <Form.Label>Title</Form.Label>
+            <Form.Label className="fs-5">Title</Form.Label>
             <Form.Control
+              size="lg"
               required
               type="text"
-              placeholder="title"
+              placeholder="Titel"
               onChange={(e) => {
                 setPostTitle(e.target.value);
               }}
@@ -88,23 +101,30 @@ export default function AddPost() {
         </Row>
 
         <Row className="md-3">
-          <Form.Group as={Col} md="20" controlId="validation2">
-            <Form.Label>
+          <Form.Group as={Col} md="12" controlId="validation2">
+            <Form.Label
+            className="fs-5"
+             >
               Söker du nytt hem eller vill du adoptera? Information om ditt
               djur/vad du söker.
             </Form.Label>
             <Form.Control
+              size="lg"
               required
               as="textarea"
+              placeholder="Information..."
               type="text"
               onChange={(e) => {
                 setPostText(e.target.value);
               }}
               value={postText}
             />
+            <Form.Control.Feedback type="invalid">
+              Saknas information
+            </Form.Control.Feedback>
           </Form.Group>
         </Row>
-        <Button variant="success" type="submit">
+        <Button className="addBtn" variant="success" type="submit">
           Lägg till
         </Button>
       </Form>
@@ -125,5 +145,7 @@ export default function AddPost() {
         ))}
       </div>
     </div>
+          </Collapse>
+    </>
   );
 }

@@ -1,10 +1,20 @@
-.style {
-  padding-left: 2rem;
+.loginContainer {
+  background-image: url("../img/Background.jpg") ;
+  background-size: cover;
+  height: 100vh;
+}
+.background-login-box {
+  background-color: rgba(101, 146, 100, 0.5);
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 form {
   display: flex;
   flex-direction: column;
-  width: 50%;
 }
 
 input {
@@ -12,8 +22,16 @@ input {
   margin-bottom: 1rem;
 }
 
-button {
-  border-radius: 0.3rem;
-  width: 5rem;
+.loginBtn {
+  width:8rem;
   font-size: 1rem;
+  align-self: center;
+}
+
+span {
+  color: black;
+}
+
+span:hover {
+  color: white;
 }

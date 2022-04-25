@@ -1,7 +1,9 @@
-.formAddPost {
+.addPostContainer {
   display: flex;
   justify-content: center;
   margin: 1rem 0;
+  
+  
 }
 
 .remove-btn {
@@ -9,3 +11,22 @@
   padding-left: 0.7rem;
   margin-top: 0.4rem;
 }
+
+.addBtn {
+   width:8rem;
+  font-size: 1rem;
+  align-self: center;
+  margin: 1rem 0;
+}
+
+.newBtn {
+  width:8rem;
+  font-size: 1rem;
+  margin: 1rem 4rem;
+
+}
+
+.formAddPost {
+  width: 15rem;
+}
+
