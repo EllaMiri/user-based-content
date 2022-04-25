@@ -6,9 +6,9 @@ POST http://localhost:4000/post
 Content-Type: application/json
 
 {
-    "username": "Anna",
+
     "title": "Cat needs new home",
-    "description": "Found on the street"
+    "text": "Found on the street"
 }
 
 ###

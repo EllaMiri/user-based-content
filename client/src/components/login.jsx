@@ -2,17 +2,35 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../components/login.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import axios from "axios";
 
 export default function Login() {
   const [validated, setValidated] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    const user = {
+      username: username,
+      password: password,
+    };
+    event.preventDefault();
+
     const loginForm = event.currentTarget;
     if (loginForm.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      setValidated(true);
     }
-    setValidated(true);
+
+    axios
+      .post("http://localhost:4000/user/login/", user)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setUsername("");
+    setPassword("");
   };
 
   return (
@@ -29,6 +47,8 @@ export default function Login() {
                 required
                 type="text"
                 placeholder="användarnamn"
+                onChange={(e) => setUsername(e.currentTarget.value)}
+                value={username}
               />
               <Form.Control.Feedback type="invalid">
                 Skriv in ditt användarnamn
@@ -44,6 +64,8 @@ export default function Login() {
                 required
                 type="password"
                 placeholder="lösenord"
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                value={password}
               />
               <Form.Control.Feedback type="invalid">
                 Skriv in ditt lösenord

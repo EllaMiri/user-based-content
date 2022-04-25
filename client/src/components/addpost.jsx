@@ -145,6 +145,7 @@ export default function AddPost() {
               >
                 ❌
               </p>
+              <p>{post.user?.username}</p>
               <h4>{post.title}</h4>
               <p>{post.text}</p>
             </div>
