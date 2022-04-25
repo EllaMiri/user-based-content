@@ -81,7 +81,7 @@ export default function Register() {
             <Form.Label>Lösenord</Form.Label>
             <Form.Control
               required
-              type="text"
+              type="password"
               placeholder="lösenord"
               onChange={(e) => setPassword(e.currentTarget.value)}
               value={password}

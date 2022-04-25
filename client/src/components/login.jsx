@@ -22,31 +22,23 @@ export default function Login() {
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Form.Group as={Col} md="4" controlId="validation1">
-          <Form.Label>Användarnamn</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="användarnamn"
-          />
-          <Form.Control.Feedback>
-            Skriv in ditt användarnamn
-          </Form.Control.Feedback>
-        </Form.Group>
+            <Form.Label>Användarnamn</Form.Label>
+            <Form.Control required type="text" placeholder="användarnamn" />
+            <Form.Control.Feedback>
+              Skriv in ditt användarnamn
+            </Form.Control.Feedback>
+          </Form.Group>
         </Row>
 
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validation2">
-              <Form.Label>Lösenord</Form.Label>
-              <Form.Control
-                  required
-                  type="text"
-                  placeholder="lösenord"
-              />
-              <Form.Control.Feedback>
-                Skriv in ditt lösenord
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="4" controlId="validation2">
+            <Form.Label>Lösenord</Form.Label>
+            <Form.Control required type="password" placeholder="lösenord" />
+            <Form.Control.Feedback>
+              Skriv in ditt lösenord
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
 
         <Button variant="success" type="submit">
           Logga in
@@ -58,4 +50,5 @@ export default function Login() {
       </Link>
       <p>Glömt lösenord?</p>
     </div>
-  )}
+  );
+}
