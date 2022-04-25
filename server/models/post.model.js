@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     username: { type: String },
     title: { type: String },
     text: { type: String },
-    date: { type: Date },
+    date: { type: Date, default: Date.now },
   },
   {
     versionKey: false,
