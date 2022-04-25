@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../components/register.css";
 import axios from "axios";
 import { Form, Button, Row, Col } from "react-bootstrap";
@@ -10,6 +10,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     const loginForm = event.currentTarget;
@@ -37,6 +38,7 @@ export default function Register() {
     setUsername("");
     setEmail("");
     setPassword("");
+    navigate("/login");
   };
 
   return (

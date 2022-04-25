@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../components/login.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
@@ -8,6 +8,8 @@ export default function Login() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     const user = {
@@ -31,6 +33,7 @@ export default function Login() {
       });
     setUsername("");
     setPassword("");
+    navigate("/");
     console.log(username, password);
   };
 
