@@ -11,23 +11,35 @@ h1 {
   font-size: 3rem;
   color: black;
   padding-top: 2rem;
-   padding-bottom: 1rem;
+  padding-bottom: 1rem;
   padding-left: 2rem;
- 
 }
 
 span {
   color: black;
   padding-right: 2rem;
-
 }
-  span:hover {
+span:hover {
   color: white;
 }
 
-
-
 a {
-   text-decoration: none; 
+  text-decoration: none;
 }
 
+@media screen and (max-width: 450px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    padding-top: 1rem;
+    padding-left: 0;
+  }
+
+  span {
+    padding-right: 0;
+    font-size: smaller;
+  }
+}

@@ -1,7 +1,10 @@
 .main {
-  background-image: url("../../img/Background.jpg") ;
+  background-image: url("../../img/Background.jpg");
   background-size: cover;
   height: 100vh;
+  background-repeat: no-repeat;
+  /* background-position: center; */
+  /* background-size: contain;  */
 
   display: flex;
   align-items: center;
@@ -16,7 +19,7 @@
 .posts {
   height: 100%;
   width: 20rem;
- border-radius: .3rem;
+  border-radius: 0.3rem;
   background-color: white;
   opacity: 0.9;
   padding: 1rem;
@@ -27,7 +30,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
 }
 
 .allPosts {
@@ -38,4 +40,16 @@
 
 .mainTitle {
   margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 350px) {
+  .posts {
+    width: 15rem;
+    font-size: smaller;
+  }
+  .main {
+    background-image: url("../../img/cat.jpg");
+    background-size: cover;
+    height: 100vh;
+  }
 }
