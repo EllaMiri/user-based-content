@@ -21,18 +21,29 @@ const port = 4000;
 const host = "localhost";
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "DELETE", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 app.use(
   cookieSession({
     secret: "aVeryS3cr3tK3y",
-    maxAge: 1000 * 10,
+    maxAge: 1000 * 100,
     sameSite: "strict",
     httpOnly: true,
     secure: false,
   })
 );
-
+app.use("/", (req, res, next) => {
+  console.log(req.session);
+  next();
+});
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 
