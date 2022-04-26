@@ -8,8 +8,6 @@
   cursor: pointer;
   margin-bottom: 0;
   padding-left: 0.7rem;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .addBtn {
@@ -27,4 +25,9 @@
 
 .formAddPost {
   width: 15rem;
+}
+
+.interactIcons {
+  display: flex;
+  justify-content: flex-end;
 }

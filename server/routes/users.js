@@ -1,14 +1,14 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
+import { secure } from "../middlewares/auth.js";
 import bcrypt from "bcrypt";
 import userModel from "../models/user.model.js";
 
 const routes = express.Router();
 
-routes.get("/", async (req, res) => {
+routes.get("/", secure, async (req, res) => {
   try {
-    const users = await userModel.find({});
-    res.json(users);
+    const user = await userModel.findById(req.session.user);
+    res.json(user);
   } catch (err) {
     console.log(err);
     res.send("Other error...");
@@ -81,7 +81,12 @@ routes.delete("/:id", async (req, res) => {
 
 routes.post("/login", async (req, res) => {
   // const user = req.body;
-  const foundUser = await userModel.findOne({ username: req.body.username });
+  const foundUser = await userModel
+    .findOne({ username: req.body.username })
+    .select("+password");
+
+  //Kolla att användaren finns
+  console.log(req.body, foundUser);
 
   const passCheck = await bcrypt.compare(req.body.password, foundUser.password);
 
@@ -89,13 +94,11 @@ routes.post("/login", async (req, res) => {
     return res.status(401).send("Wrong password or username");
   }
 
-  if (req.session.id) {
+  if (req.session.user) {
     return res.send("Already logged in");
   }
-  req.session.id = uuidv4();
-  req.session.username = foundUser.username;
-  req.session.loginDate = new Date();
-  req.session.role = undefined;
+
+  req.session.user = foundUser;
   res.send("Successful login");
 });
 

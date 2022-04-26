@@ -1,12 +1,12 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
+import { secure } from "../middlewares/auth.js";
 import postModel from "../models/post.model.js";
 
 const routes = express.Router();
 
 routes.get("/", async (req, res) => {
   try {
-    const posts = await postModel.find({});
+    const posts = await postModel.find({}).populate("user");
     res.json(posts);
   } catch (err) {
     console.log(err);
@@ -14,10 +14,11 @@ routes.get("/", async (req, res) => {
   }
 });
 
-routes.post("/", async (req, res) => {
+routes.post("/", secure, async (req, res) => {
+  console.log(req.session.user);
   try {
     const post = new postModel({
-      username: req.body.username,
+      user: req.session.user,
       title: req.body.title,
       text: req.body.text,
       date: req.body.date,

@@ -11,10 +11,14 @@ export default function AddPost() {
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [postItems, setPostItems] = useState([]);
+  const [isUpdating, setIsUpdating] = useState("");
+  const [updatePostTitle, setUpdatePostTitle] = useState("");
+  const [updatePostText, setUpdatePostText] = useState("");
 
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     const post = {
       title: postTitle,
       text: postText,
@@ -34,11 +38,15 @@ export default function AddPost() {
     //   .catch((error) => {
     //     console.log(error);
     //   });
+
     try {
-      const res = await axios.post("http://localhost:4000/post/", post);
+      const res = await axios.post("http://localhost:4000/post/", post, {
+        withCredentials: true,
+      });
       setPostItems((prev) => [...prev, res.data]);
       setPostTitle("");
       setPostText("");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +55,9 @@ export default function AddPost() {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/post/");
+        const res = await axios.get("http://localhost:4000/post/", {
+          withCredentials: true,
+        });
         setPostItems(res.data);
       } catch (err) {
         console.log(err);
@@ -58,7 +68,9 @@ export default function AddPost() {
 
   const deletePost = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:4000/post/${id}`);
+      const res = await axios.delete(`http://localhost:4000/post/${id}`, {
+        withCredentials: true,
+      });
       const newPostItems = postItems.filter((item) => item._id !== id);
       setPostItems(newPostItems);
       console.log(res.data);
@@ -66,6 +78,82 @@ export default function AddPost() {
       console.log(err);
     }
   };
+
+  const updatedPost = {
+    title: updatePostTitle,
+    text: updatePostText,
+  };
+  const updatePost = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(
+        `http://localhost:4000/post/${isUpdating}`,
+        updatedPost
+      );
+      setUpdatePostText("");
+      setUpdatePostTitle("");
+      setIsUpdating("");
+      window.location.reload();
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const renderUpdateForm = () => (
+    <Form
+      className="formAddPost"
+      noValidate
+      validated={validated}
+      onSubmit={(e) => {
+        updatePost(e);
+      }}
+    >
+      <Row className="md-3">
+        <Form.Group as={Col} md="12" controlId="validation1">
+          <Form.Label className="fs-5">Title</Form.Label>
+          <Form.Control
+            size="lg"
+            required
+            type="text"
+            placeholder="Ny titel"
+            onChange={(e) => {
+              setUpdatePostTitle(e.target.value);
+            }}
+            value={updatePostTitle}
+          />
+          <Form.Control.Feedback type="invalid">
+            Skriv in ditt användarnamn
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+
+      <Row className="md-3">
+        <Form.Group as={Col} md="12" controlId="validation2">
+          <Form.Label className="fs-5">
+            Uppdatera ditt inlägg med ny titel och text!
+          </Form.Label>
+          <Form.Control
+            size="lg"
+            required
+            as="textarea"
+            placeholder="Ny text"
+            type="text"
+            onChange={(e) => {
+              setUpdatePostText(e.target.value);
+            }}
+            value={updatePostText}
+          />
+          <Form.Control.Feedback type="invalid">
+            Saknas information
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Row>
+      <Button className="addBtn" variant="success" type="submit">
+        Ändra
+      </Button>
+    </Form>
+  );
 
   return (
     <>
@@ -136,18 +224,35 @@ export default function AddPost() {
       <div>
         {postItems.map((post) => (
           <div className="postContainer">
-            <div className="posts">
-              <p
-                onClick={() => {
-                  deletePost(post._id);
-                }}
-                className="remove-btn"
-              >
-                ❌
-              </p>
-              <h4>{post.title}</h4>
-              <p>{post.text}</p>
-            </div>
+            {isUpdating === post._id ? (
+              renderUpdateForm()
+            ) : (
+              <>
+                <div className="posts">
+                  <div className="interactIcons">
+                    <p
+                      onClick={() => {
+                        setIsUpdating(post._id);
+                      }}
+                      className="remove-btn"
+                    >
+                      🖊
+                    </p>
+                    <p
+                      onClick={() => {
+                        deletePost(post._id);
+                      }}
+                      className="remove-btn"
+                    >
+                      ❌
+                    </p>
+                  </div>
+                  <p>{post.user?.username}</p>
+                  <h4>{post.title}</h4>
+                  <p>{post.text}</p>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>

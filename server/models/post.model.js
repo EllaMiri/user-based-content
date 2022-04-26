@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const schema = new mongoose.Schema(
   {
-    username: { type: String },
-    title: { type: String },
-    text: { type: String },
-    date: { type: Date, default: Date.now },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    title: { type: String, required: true },
+    text: { type: String, required: true },
+    date: { type: Date, required: true, default: Date.now },
   },
   {
     versionKey: false,
