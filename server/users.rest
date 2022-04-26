@@ -35,9 +35,14 @@ POST http://localhost:4000/user/login
 Content-Type: application/json
 
 {
-    "username": "ella",
-    "password": "hej"
+    "username": "hejsan",
+    "password": "hejsan"
 }
+
+###
+
+POST http://localhost:4000/user/logout
+
 
 ###
 

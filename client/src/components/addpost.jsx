@@ -55,7 +55,7 @@ export default function AddPost() {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/post/", {
+        const res = await axios.get("http://localhost:4000/post/all/", {
           withCredentials: true,
         });
         setPostItems(res.data);

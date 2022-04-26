@@ -1,10 +1,22 @@
 import express from "express";
-import { secure } from "../middlewares/auth.js";
+import { secure, updateAuth, documentAuth } from "../middlewares/auth.js";
 import postModel from "../models/post.model.js";
 
 const routes = express.Router();
 
 routes.get("/", async (req, res) => {
+  try {
+    const posts = await postModel
+      .find({ user: req.session.user._id })
+      .populate("user");
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+    res.send("Other error...");
+  }
+});
+
+routes.get("/all", async (req, res) => {
   try {
     const posts = await postModel.find({}).populate("user");
     res.json(posts);
@@ -32,7 +44,7 @@ routes.post("/", secure, async (req, res) => {
   }
 });
 
-routes.put("/:id", async (req, res) => {
+routes.put("/:id", secure, updateAuth, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -59,7 +71,7 @@ routes.put("/:id", async (req, res) => {
 //   }
 // });
 
-routes.delete("/:id", async (req, res) => {
+routes.delete("/:id", secure, documentAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const removedPost = await postModel.findByIdAndRemove(id);

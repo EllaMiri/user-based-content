@@ -110,5 +110,10 @@ routes.get("/login", (req, res) => {
   res.send(req.session);
 });
 
+routes.post("/logout", (req, res) => {
+  req.session.user = undefined;
+  res.send("Logged out!");
+});
+
 // module.exports = routes;
 export default routes;
