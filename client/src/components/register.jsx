@@ -12,8 +12,9 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const loginForm = event.currentTarget;
+    event.preventDefault();
 
     const registered = {
       username: username,
@@ -26,6 +27,13 @@ export default function Register() {
       event.stopPropagation();
     }
     setValidated(true);
+    // try {
+    //   const response = await fetch("http://localhost:4000/user/", registered);
+    //   const data = await response.json();
+    //   return data;
+    // } catch (err) {
+    //   console.log(err);
+    // }
     axios
       .post("http://localhost:4000/user/", registered)
       .then((res) => {
@@ -35,10 +43,10 @@ export default function Register() {
         console.log(error);
       });
 
+    navigate("/login");
     setUsername("");
     setEmail("");
     setPassword("");
-    navigate("/login");
   };
 
   return (
