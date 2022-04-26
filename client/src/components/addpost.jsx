@@ -88,7 +88,8 @@ export default function AddPost() {
     try {
       const res = await axios.put(
         `http://localhost:4000/post/${isUpdating}`,
-        updatedPost
+        updatedPost,
+        { withCredentials: true }
       );
       setUpdatePostText("");
       setUpdatePostTitle("");
