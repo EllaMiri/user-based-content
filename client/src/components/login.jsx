@@ -12,19 +12,22 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     const user = {
       username: username,
       password: password,
     };
-    event.preventDefault();
 
     const loginForm = event.currentTarget;
     if (loginForm.checkValidity() === false) {
+      event.preventDefault();
       setValidated(true);
     }
 
     axios
-      .post("http://localhost:4000/user/login/", user)
+      .post("http://localhost:4000/user/login/", user, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res.data);
       })
