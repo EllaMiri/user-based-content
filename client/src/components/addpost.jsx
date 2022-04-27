@@ -7,6 +7,8 @@ import axios from "axios";
 export default function AddPost() {
   // let [validated, setValidated] = useFormValidation()
   const [open, setOpen] = useState(false);
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
 
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
@@ -250,6 +252,7 @@ export default function AddPost() {
                   <p>{post.user?.username}</p>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
+                  <p className="postDate">{today.toLocaleDateString()}</p>
                 </div>
               </>
             )}
