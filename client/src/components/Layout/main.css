@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: scroll;
 }
 
 .background-box {
@@ -24,6 +25,7 @@
   opacity: 0.9;
   padding: 1rem;
   margin-bottom: 2rem;
+  word-wrap: break-word;
 }
 
 .postContainer {
@@ -54,4 +56,3 @@
     height: 100vh;
   }
 }
-

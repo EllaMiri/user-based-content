@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 export default function AddPost() {
   // let [validated, setValidated] = useFormValidation()
   const [open, setOpen] = useState(false);
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
 
   const [postTitle, setPostTitle] = useState("");
   const [postText, setPostText] = useState("");
@@ -20,6 +22,17 @@ export default function AddPost() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          alert("You must login!");
+        }
+        return error;
+      }
+    );
     event.preventDefault();
     const post = {
       title: postTitle,
@@ -114,10 +127,12 @@ export default function AddPost() {
   const updatePost = async (e) => {
     e.preventDefault();
     try {
+
       await updatePostRes();
       setUpdatePostText("");
       setUpdatePostTitle("");
-      setIsUpdating("");
+      setIsUpdating("")
+      
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -282,9 +297,10 @@ export default function AddPost() {
                       ❌
                     </p>
                   </div>
-                  <p>{post.user?.username}</p>
+                  <h5>{post.user?.username}</h5>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
+                  <p className="postDate">{today.toLocaleDateString()}</p>
                 </div>
               </>
             )}
