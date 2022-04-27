@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../components/login.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [validated, setValidated] = useState(false);
@@ -11,12 +13,12 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  const user = {
+    username: username,
+    password: password,
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = {
-      username: username,
-      password: password,
-    };
 
     const loginForm = event.currentTarget;
     if (loginForm.checkValidity() === false) {
@@ -24,24 +26,46 @@ export default function Login() {
       setValidated(true);
     }
 
-    axios
-      .post("http://localhost:4000/user/login/", user, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const loginCheck = await loginRes();
+    console.log(loginCheck);
+    if (loginCheck.status === 200) {
+      navigate("/");
+    }
     setUsername("");
     setPassword("");
-    navigate("/");
-    console.log(username, password);
+  };
+
+  const loginRes = async () => {
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          toast.error("Wrong password or username!");
+        }
+        return error;
+      }
+    );
+    const res = await axios.post("http://localhost:4000/user/login/", user, {
+      withCredentials: true,
+    });
+    return res;
   };
 
   return (
     <div className="loginContainer">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="background-login-box">
         <h2>Logga in</h2>
 

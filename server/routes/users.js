@@ -29,7 +29,7 @@ routes.post("/", async (req, res) => {
     })
     .catch((error) => {
       if (error.code === 11000) {
-        res.send("Username already exists...");
+        res.status(204).send("Username already exists");
       }
     });
 });
@@ -88,9 +88,13 @@ routes.post("/login", async (req, res) => {
   //Kolla att användaren finns
   console.log(req.body, foundUser);
 
+  if (foundUser === null) {
+    return res.status(401).send("Wrong password or username");
+  }
+
   const passCheck = await bcrypt.compare(req.body.password, foundUser.password);
 
-  if (!foundUser || !passCheck) {
+  if (!passCheck) {
     return res.status(401).send("Wrong password or username");
   }
 

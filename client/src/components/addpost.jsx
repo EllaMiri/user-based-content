@@ -3,6 +3,8 @@ import { Button, Form, Row, Col, Collapse } from "react-bootstrap";
 import "./addpost.css";
 // import useFormValidation from "../hooks/formValidation";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddPost() {
   // let [validated, setValidated] = useFormValidation()
@@ -66,14 +68,26 @@ export default function AddPost() {
     getPosts();
   }, []);
 
+  const deletePostRes = async (id) => {
+    const res = await axios
+      .delete(`http://localhost:4000/post/${id}`, {
+        withCredentials: true,
+      })
+      .then((response) => response)
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          toast.warn("That is not your post!");
+        }
+      });
+    return res.data;
+  };
   const deletePost = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:4000/post/${id}`, {
-        withCredentials: true,
-      });
+      const response = await deletePostRes(id);
+      console.log(response.status);
       const newPostItems = postItems.filter((item) => item._id !== id);
       setPostItems(newPostItems);
-      console.log(res.data);
+      toast.success("Post deleted!");
     } catch (err) {
       console.log(err);
     }
@@ -83,19 +97,28 @@ export default function AddPost() {
     title: updatePostTitle,
     text: updatePostText,
   };
+
+  const updatePostRes = async (e) => {
+    const res = await axios
+      .put(`http://localhost:4000/post/${isUpdating}`, updatedPost, {
+        withCredentials: true,
+      })
+      .then((response) => response)
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          toast.warn("That is not your post!");
+        }
+      });
+    return res.data;
+  };
   const updatePost = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(
-        `http://localhost:4000/post/${isUpdating}`,
-        updatedPost,
-        { withCredentials: true }
-      );
+      await updatePostRes();
       setUpdatePostText("");
       setUpdatePostTitle("");
       setIsUpdating("");
       window.location.reload();
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -158,6 +181,17 @@ export default function AddPost() {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Button
         onClick={() => setOpen(!open)}
         aria-controls="example-collapse-text"
