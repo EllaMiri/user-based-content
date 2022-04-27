@@ -20,6 +20,17 @@ export default function AddPost() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          alert("You must login!");
+        }
+        return error;
+      }
+    );
     event.preventDefault();
     const post = {
       title: postTitle,
@@ -90,13 +101,14 @@ export default function AddPost() {
     try {
       const res = await axios.put(
         `http://localhost:4000/post/${isUpdating}`,
-        updatedPost
+        updatedPost,
+        { withCredentials: true }
       );
       setUpdatePostText("");
       setUpdatePostTitle("");
       setIsUpdating("");
-      window.location.reload();
       console.log(res.data);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -249,7 +261,7 @@ export default function AddPost() {
                       ❌
                     </p>
                   </div>
-                  <p>{post.user?.username}</p>
+                  <h5>{post.user?.username}</h5>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
                   <p className="postDate">{today.toLocaleDateString()}</p>
