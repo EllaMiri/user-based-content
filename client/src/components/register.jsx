@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../components/register.css";
 import axios from "axios";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const [validated, setValidated] = useState(false);
@@ -34,16 +36,19 @@ export default function Register() {
     // } catch (err) {
     //   console.log(err);
     // }
-    axios
+    await axios
       .post("http://localhost:4000/user/", registered)
       .then((res) => {
-        console.log(res.data);
+        if (res.status === 204) {
+          toast.warn("Username already exists!");
+        } else {
+          navigate("/login");
+        }
       })
       .catch((error) => {
         console.log(error);
       });
 
-    navigate("/login");
     setUsername("");
     setEmail("");
     setPassword("");
@@ -53,6 +58,17 @@ export default function Register() {
     <div className="registerContainer">
       <div className="background-register-box">
         <h2>Registrera ett konto</h2>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="md-3">

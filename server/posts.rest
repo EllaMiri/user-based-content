@@ -2,6 +2,10 @@ GET http://localhost:4000/post
 
 ###
 
+GET http://localhost:4000/post/all
+
+###
+
 POST http://localhost:4000/post
 Content-Type: application/json
 
@@ -13,14 +17,14 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:4000/post/626154de440464adb9603c4d
+PUT http://localhost:4000/post/6267f6b60a16df84157a96ec
 Content-Type: application/json
 
 {
     "username": "CoolKid",
     "title": "Cat loves milk",
     "description": "If you love your cat let it drink milk!",
-    "id": "35785720-10de-4973-8606-465ba3df7e18"
+    "_id": "6267f6b60a16df84157a96ec"
 }
 
 ###
