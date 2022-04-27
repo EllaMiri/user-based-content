@@ -1,5 +1,5 @@
 import express from "express";
-import { secure, updateAuth, documentAuth } from "../middlewares/auth.js";
+import { secure, updateAuth, deleteAuth } from "../middlewares/auth.js";
 import postModel from "../models/post.model.js";
 
 const routes = express.Router();
@@ -47,7 +47,7 @@ routes.post("/", secure, async (req, res) => {
 routes.put("/:id", secure, updateAuth, async (req, res) => {
   try {
     const { id } = req.params;
-
+    console.log(req.body);
     const post = await postModel.findByIdAndUpdate(id, req.body);
 
     res.json({
@@ -71,7 +71,7 @@ routes.put("/:id", secure, updateAuth, async (req, res) => {
 //   }
 // });
 
-routes.delete("/:id", secure, documentAuth, async (req, res) => {
+routes.delete("/:id", secure, deleteAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const removedPost = await postModel.findByIdAndRemove(id);

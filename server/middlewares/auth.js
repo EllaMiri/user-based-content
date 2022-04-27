@@ -11,24 +11,17 @@ export function secure(req, res, next) {
 }
 
 export async function updateAuth(req, res, next) {
-  const post = await postModel.findById(req.body._id);
-  console.log(req.session.user._id);
-  console.log(post.user._id.toString());
+  const post = await postModel.findById(req.params.id);
+  console.log(post);
   if (req.session.user._id === post.user._id.toString()) {
     next();
   } else {
     res.status(401).json("This is not your post!");
   }
 }
-
-export async function documentAuth(req, res, next) {
-  if (req.params._id) {
-    const post = await postModel.findById(req.params._id);
-  } else if (!req.params._id) {
-    const post = await postModel.findById(req.body._id);
-  }
-  console.log(req.session.user._id);
-  console.log(post.user._id.toString());
+export async function deleteAuth(req, res, next) {
+  const post = await postModel.findByIdAndDelete(req.params.id);
+  console.log(post);
   if (req.session.user._id === post.user._id.toString()) {
     next();
   } else {
