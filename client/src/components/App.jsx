@@ -5,7 +5,6 @@ import Footer from "./Layout/footer";
 import Main from "./Layout/main";
 import Login from "./login";
 import Register from "./register";
-import LoggedInUser from "./loggedInUser";
 import UserProvider from "../contexts/userContext";
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/loggedInUser" element={<LoggedInUser />} />
         </Routes>
         <Footer />
       </UserProvider>
