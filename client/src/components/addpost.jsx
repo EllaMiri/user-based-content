@@ -35,20 +35,37 @@ export default function AddPost() {
     );
     event.preventDefault();
     const post = {
-      title: postTitle,
-      text: postText,
+      title: postTitle?.toString().trim() ?? '',
+      text: postText?.toString().trim() ?? '',
     };
     const addPostform = event.currentTarget;
+    console.log(addPostform.checkValidity())
+
+    setValidated(true) // Aktivera felmeddelanden
+
     if (addPostform.checkValidity() === false) {
-      event.preventDefault();
+      // Inte valid, avbryt
       event.stopPropagation();
-      setValidated(true);
+      return
     }
 
     try {
       const res = await axios.post("http://localhost:4000/post/", post, {
         withCredentials: true,
       });
+
+      if (res.error?.title) {
+        throw new Error(res.error.title.message)
+      }
+
+      if (res.error?.text) {
+        throw new Error(res.error.text.message)
+      }
+
+      if (!res.data) {
+        throw new Error('No data in response')
+      }
+
       setPostItems((prev) => [...prev, res.data]);
       setPostTitle("");
       setPostText("");
@@ -94,7 +111,6 @@ export default function AddPost() {
       .put(`http://localhost:4000/post/${isUpdating}`, updatedPost, {
         withCredentials: true,
       })
-      .then((response) => response)
       .catch(function (error) {
         if (error.response.status === 401) {
           toast.warn("That is not your post!");
@@ -136,9 +152,7 @@ export default function AddPost() {
       className="formAddPost"
       noValidate
       validated={validated}
-      onSubmit={(e) => {
-        updatePost(e);
-      }}
+      onSubmit={updatePost}
     >
       <Row className="md-3">
         <Form.Group as={Col} md="12" controlId="validation1">
@@ -264,7 +278,7 @@ export default function AddPost() {
         </div>
       </Collapse>
       <div>
-        {postItems.map((post) => (
+        {postItems.filter(post => post).map((post) => (
           <div className="postContainer">
             {isUpdating === post._id ? (
               renderUpdateForm()
@@ -272,7 +286,7 @@ export default function AddPost() {
               <>
                 <div className="posts">
                   {context.isLoggedIn &&
-                  post.user._id === context.isLoggedIn._id ? (
+                  post.user?._id === context.isLoggedIn._id ? (
                     <div className="interactIcons">
                       <p
                         onClick={() => {
