@@ -80,7 +80,6 @@ routes.delete("/:id", async (req, res) => {
 });
 
 routes.post("/login", async (req, res) => {
-  // const user = req.body;
   const foundUser = await userModel
     .findOne({ username: req.body.username })
     .select("+password");
@@ -119,5 +118,4 @@ routes.post("/logout", (req, res) => {
   res.send("Logged out!");
 });
 
-// module.exports = routes;
 export default routes;

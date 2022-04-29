@@ -59,17 +59,6 @@ routes.put("/:id", secure, postAuth, async (req, res) => {
   }
 });
 
-// routes.get("/posts/:id", (req, res) => {
-//   const { id } = req.params;
-//   const findUser = users.find((user) => user.id === id);
-
-//   if (findUser === undefined) {
-//     return res.status(404).send("Not found!");
-//   }
-//   if (findUser) {
-//     return res.send(findUser);
-//   }
-// });
 
 routes.delete("/:id", secure, postAuth, async (req, res) => {
   try {
@@ -85,5 +74,4 @@ routes.delete("/:id", secure, postAuth, async (req, res) => {
   }
 });
 
-// module.exports = routes;
 export default routes;

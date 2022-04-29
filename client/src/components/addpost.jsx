@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Row, Col, Collapse } from "react-bootstrap";
 import "./addpost.css";
-// import useFormValidation from "../hooks/formValidation";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AddPost() {
-  // let [validated, setValidated] = useFormValidation()
   const [open, setOpen] = useState(false);
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -45,14 +43,6 @@ export default function AddPost() {
     }
 
     setValidated(true);
-    // axios
-    //   .post("http://localhost:4000/post/", post)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
 
     try {
       const res = await axios.post("http://localhost:4000/post/", post, {
@@ -139,6 +129,7 @@ export default function AddPost() {
     }
   };
 
+  // Form that updates the posts
   const renderUpdateForm = () => (
     <Form
       className="formAddPost"
@@ -217,6 +208,8 @@ export default function AddPost() {
         Ny annons
       </Button>
       <Collapse in={open}>
+
+        {/* Form for add a post */}
         <div id="example-collapse-text" className="addPostContainer">
           <Form
             className="formAddPost"
