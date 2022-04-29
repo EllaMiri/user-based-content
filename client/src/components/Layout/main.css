@@ -3,8 +3,6 @@
   background-size: cover;
   height: 100vh;
   background-repeat: no-repeat;
-  /* background-position: center; */
-  /* background-size: contain;  */
 
   display: flex;
   align-items: center;
@@ -15,7 +13,6 @@
 .background-box {
   background-color: rgba(101, 146, 100, 0.5);
   width: 100vw;
-  height: 100vh;
 }
 .posts {
   height: 100%;
