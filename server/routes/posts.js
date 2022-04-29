@@ -59,7 +59,6 @@ routes.put("/:id", secure, postAuth, async (req, res) => {
   }
 });
 
-
 routes.delete("/:id", secure, postAuth, async (req, res) => {
   try {
     const { id } = req.params;

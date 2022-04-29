@@ -52,25 +52,12 @@ export default function AddPost() {
       setPostItems((prev) => [...prev, res.data]);
       setPostTitle("");
       setPostText("");
+      getPosts();
       // window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const res = await axios.get("http://localhost:4000/post/all/", {
-          withCredentials: true,
-        });
-        setPostItems(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getPosts();
-  }, []);
 
   const deletePostRes = async (id) => {
     const res = await axios
@@ -122,12 +109,26 @@ export default function AddPost() {
       setUpdatePostText("");
       setUpdatePostTitle("");
       setIsUpdating("");
+      getPosts();
 
       // window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
+  const getPosts = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/post/all/", {
+        withCredentials: true,
+      });
+      setPostItems(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   // Form that updates the posts
   const renderUpdateForm = () => (
