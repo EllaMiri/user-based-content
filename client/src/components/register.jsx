@@ -23,19 +23,13 @@ export default function Register() {
       email: email,
       password: password,
     };
-
+    // Validation for the form
     if (loginForm.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
-    // try {
-    //   const response = await fetch("http://localhost:4000/user/", registered);
-    //   const data = await response.json();
-    //   return data;
-    // } catch (err) {
-    //   console.log(err);
-    // }
+
     await axios
       .post("http://localhost:4000/user/", registered)
       .then((res) => {
@@ -69,7 +63,7 @@ export default function Register() {
           draggable
           pauseOnHover
         />
-
+        {/* Register an account form */}
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="md-3">
             <Form.Group as={Col} md="12" controlId="validation1">
