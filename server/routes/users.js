@@ -126,7 +126,7 @@ routes.get("/login", (req, res) => {
 });
 
 routes.post("/logout", (req, res) => {
-  console.log("INNAN INOGGAD", req.session);
+  console.log("INNAN INLOGGAD", req.session);
   req.session = null;
   res.send("Logged out!");
 });

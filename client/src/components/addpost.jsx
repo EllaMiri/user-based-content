@@ -23,6 +23,7 @@ export default function AddPost() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
+    
     axios.interceptors.response.use(
       (response) => {
         return response;
@@ -43,9 +44,8 @@ export default function AddPost() {
     if (addPostform.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      setValidated(true);
     }
-
-    setValidated(true);
 
     try {
       const res = await axios.post("http://localhost:4000/post/", post, {
@@ -155,7 +155,7 @@ export default function AddPost() {
             value={updatePostTitle}
           />
           <Form.Control.Feedback type="invalid">
-            Skriv in ditt användarnamn
+            Skriv en title
           </Form.Control.Feedback>
         </Form.Group>
       </Row>
@@ -233,7 +233,7 @@ export default function AddPost() {
                   value={postTitle}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Skriv in ditt användarnamn
+                  Skriv en title
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
@@ -295,11 +295,11 @@ export default function AddPost() {
                       </p>
                     </div>
                   ) : undefined}
-                  <h5>{post.user?.username}</h5>
+                  <h5>Användarnamn: {post.user?.username}</h5>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
                   <p className="postDate">{today.toLocaleDateString()}</p>
-                  <h6>Kontakt: {post.user.email}</h6>
+                  <h6>Kontakt: {post.user?.email}</h6>
                 </div>
               </>
             )}
