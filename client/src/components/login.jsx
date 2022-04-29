@@ -18,7 +18,7 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     // Validation for the form
     const loginForm = event.currentTarget;
     if (loginForm.checkValidity() === false) {
@@ -41,8 +41,6 @@ export default function Login() {
       setPassword("");
     }
   };
-
-  console.log(context.isLoggedIn);
   if (context.isLoggedIn) {
     navigate("/");
   }
