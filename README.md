@@ -16,14 +16,14 @@ MongoDB Composs as our GUI.
 In directory **server**, run:  
 `npm i` to install all dependencies
 
-Then run: `npm start`
+Then in the same directory, run: `npm start`
 
 ### Step 2:
 
 Open a new terminal window and in directory **client**, run:  
 `npm i` to install all dependencies.
 
-Then run: `npm start`
+Then in the same directory, run: `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
