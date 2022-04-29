@@ -16,7 +16,12 @@ function Header() {
       {context.isLoggedIn ? (
         <div>
           <span>{context.isLoggedIn.username}</span>
-          <Button onClick={context.logout} variant="success" type="submit">
+          <Button
+            className="logout-button"
+            onClick={context.logout}
+            variant="success"
+            type="submit"
+          >
             Logga ut
           </Button>
         </div>
@@ -25,7 +30,6 @@ function Header() {
           <span>Logga in/Registrera dig</span>
         </Link>
       )}
-      ;
     </div>
   );
 }
