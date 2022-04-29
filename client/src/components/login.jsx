@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../components/login.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../contexts/userContext";
 
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const context = useContext(UserContext);
+
   const navigate = useNavigate();
 
-  const user = {
-    username: username,
-    password: password,
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -25,34 +24,28 @@ export default function Login() {
     if (loginForm.checkValidity() === false) {
       event.preventDefault();
       setValidated(true);
+    } else {
+      loginRes();
     }
-
-    const loginCheck = await loginRes();
-    console.log(loginCheck);
-    if (loginCheck.status === 200) {
-      navigate("/");
-    }
-    setUsername("");
-    setPassword("");
   };
 
   const loginRes = async () => {
-    axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      (error) => {
-        if (error.response.status === 401) {
-          toast.error("Wrong password or username!");
-        }
-        return error;
-      }
-    );
-    const res = await axios.post("http://localhost:4000/user/login/", user, {
-      withCredentials: true,
-    });
-    return res;
+    let status = await context.login(username, password);
+    if (status) {
+      setUsername("");
+      setPassword("");
+      navigate("/");
+    } else {
+      toast.error("Wrong password or username!");
+      setUsername("");
+      setPassword("");
+    }
   };
+
+  console.log(context.isLoggedIn);
+  if (context.isLoggedIn) {
+    navigate("/");
+  }
 
   return (
     <div className="loginContainer">

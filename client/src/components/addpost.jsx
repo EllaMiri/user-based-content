@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Form, Row, Col, Collapse } from "react-bootstrap";
 import "./addpost.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../contexts/userContext";
 
 export default function AddPost() {
+
+  const context = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -51,7 +54,7 @@ export default function AddPost() {
       setPostItems((prev) => [...prev, res.data]);
       setPostTitle("");
       setPostText("");
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -117,13 +120,12 @@ export default function AddPost() {
   const updatePost = async (e) => {
     e.preventDefault();
     try {
-
       await updatePostRes();
       setUpdatePostText("");
       setUpdatePostTitle("");
-      setIsUpdating("")
-      
-      window.location.reload();
+      setIsUpdating("");
+
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -184,7 +186,7 @@ export default function AddPost() {
       </Button>
     </Form>
   );
-
+  console.log(context.isLoggedIn);
   return (
     <>
       <ToastContainer
@@ -272,28 +274,32 @@ export default function AddPost() {
             ) : (
               <>
                 <div className="posts">
-                  <div className="interactIcons">
-                    <p
-                      onClick={() => {
-                        setIsUpdating(post._id);
-                      }}
-                      className="remove-btn"
-                    >
-                      🖊
-                    </p>
-                    <p
-                      onClick={() => {
-                        deletePost(post._id);
-                      }}
-                      className="remove-btn"
-                    >
-                      ❌
-                    </p>
-                  </div>
+                  {context.isLoggedIn &&
+                  post.user._id === context.isLoggedIn._id ? (
+                    <div className="interactIcons">
+                      <p
+                        onClick={() => {
+                          setIsUpdating(post._id);
+                        }}
+                        className="remove-btn"
+                      >
+                        🖊
+                      </p>
+                      <p
+                        onClick={() => {
+                          deletePost(post._id);
+                        }}
+                        className="remove-btn"
+                      >
+                        ❌
+                      </p>
+                    </div>
+                  ) : undefined}
                   <h5>{post.user?.username}</h5>
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
                   <p className="postDate">{today.toLocaleDateString()}</p>
+                  <h6>Kontakt: {post.user.email}</h6>
                 </div>
               </>
             )}

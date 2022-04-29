@@ -15,6 +15,14 @@ routes.get("/", secure, async (req, res) => {
   }
 });
 
+routes.get("/loggedinUser", secure, (req, res) => {
+  try {
+    res.json(req.session.user);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 routes.post("/", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const registeredUser = new userModel({
@@ -80,12 +88,13 @@ routes.delete("/:id", async (req, res) => {
 });
 
 routes.post("/login", async (req, res) => {
+  req.session.user = undefined;
+  
   const foundUser = await userModel
     .findOne({ username: req.body.username })
     .select("+password");
 
   //Kolla att användaren finns
-  console.log(req.body, foundUser);
 
   if (foundUser === null) {
     return res.status(401).send("Wrong password or username");
@@ -94,15 +103,18 @@ routes.post("/login", async (req, res) => {
   const passCheck = await bcrypt.compare(req.body.password, foundUser.password);
 
   if (!passCheck) {
+    console.log("FEL UPPGIFTER");
     return res.status(401).send("Wrong password or username");
   }
 
+  console.log("INOGGAD", req.session.user);
   if (req.session.user) {
-    return res.send("Already logged in");
+    console.log("REDAN INLOGGAD");
+    return res.status(401).send("Already logged in");
   }
-
   req.session.user = foundUser;
-  res.send("Successful login");
+  console.log("USEEEEEEER", req.session.user);
+  res.json(foundUser);
 });
 
 routes.get("/login", (req, res) => {
@@ -114,7 +126,8 @@ routes.get("/login", (req, res) => {
 });
 
 routes.post("/logout", (req, res) => {
-  req.session.user = undefined;
+  console.log("INNAN INOGGAD", req.session);
+  // req.session.user = null;
   res.send("Logged out!");
 });
 
