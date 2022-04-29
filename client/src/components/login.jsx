@@ -42,7 +42,6 @@ export default function Login() {
     }
   };
 
-  console.log(context.isLoggedIn);
   if (context.isLoggedIn) {
     navigate("/");
   }

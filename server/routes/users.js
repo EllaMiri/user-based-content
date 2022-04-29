@@ -10,7 +10,6 @@ routes.get("/", secure, async (req, res) => {
     const user = await userModel.findById(req.session.user);
     res.json(user);
   } catch (err) {
-    console.log(err);
     res.send("Other error...");
   }
 });
@@ -103,17 +102,13 @@ routes.post("/login", async (req, res) => {
   const passCheck = await bcrypt.compare(req.body.password, foundUser.password);
 
   if (!passCheck) {
-    console.log("FEL UPPGIFTER");
     return res.status(401).send("Wrong password or username");
   }
 
-  console.log("INOGGAD", req.session.user);
   if (req.session.user) {
-    console.log("REDAN INLOGGAD");
     return res.status(401).send("Already logged in");
   }
   req.session.user = foundUser;
-  console.log("USEEEEEEER", req.session.user);
   res.json(foundUser);
 });
 
@@ -126,7 +121,6 @@ routes.get("/login", (req, res) => {
 });
 
 routes.post("/logout", (req, res) => {
-  console.log("INNAN INLOGGAD", req.session);
   req.session = null;
   res.send("Logged out!");
 });

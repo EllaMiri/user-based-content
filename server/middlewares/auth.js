@@ -3,7 +3,6 @@ import postModel from "../models/post.model.js";
 
 // Authention to check is the user is logged in
 export function secure(req, res, next) {
-  console.log(req.session.user);
   if (req.session.user) {
     next();
   } else {

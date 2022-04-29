@@ -90,7 +90,6 @@ export default function AddPost() {
   const deletePost = async (id) => {
     try {
       const response = await deletePostRes(id);
-      console.log(response.status);
       const newPostItems = postItems.filter((item) => item._id !== id);
       setPostItems(newPostItems);
       toast.success("Post deleted!");
@@ -186,7 +185,6 @@ export default function AddPost() {
       </Button>
     </Form>
   );
-  console.log(context.isLoggedIn);
   return (
     <>
       <ToastContainer

@@ -11,7 +11,6 @@ routes.get("/", async (req, res) => {
       .populate("user");
     res.json(posts);
   } catch (err) {
-    console.log(err);
     res.send("Other error...");
   }
 });
@@ -21,13 +20,11 @@ routes.get("/all", async (req, res) => {
     const posts = await postModel.find({}).populate("user");
     res.json(posts);
   } catch (err) {
-    console.log(err);
     res.send("Other error...");
   }
 });
 
 routes.post("/", secure, async (req, res) => {
-  console.log(req.session.user);
   try {
     const post = new postModel({
       user: req.session.user,
@@ -35,7 +32,6 @@ routes.post("/", secure, async (req, res) => {
       text: req.body.text,
       date: req.body.date,
     });
-    console.log(post);
     await post.save();
 
     res.json(post);
@@ -47,7 +43,6 @@ routes.post("/", secure, async (req, res) => {
 routes.put("/:id", secure, postAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body);
     const post = await postModel.findByIdAndUpdate(id, req.body);
 
     res.json({

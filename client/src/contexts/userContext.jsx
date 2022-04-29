@@ -11,7 +11,6 @@ const UserProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
   const login = async (username, password) => {
-    console.log(username, password);
     /* axios.interceptors.response.use(
        (response) => {
          return response;
@@ -31,13 +30,11 @@ const UserProvider = (props) => {
           withCredentials: true,
         }
       );
-      console.log(res.data);
+   
       setIsLoggedIn(res.data);
-      console.log(res.data);
+   
       return true;
     } catch (err) {
-      console.log(err);
-      console.log(err.response.status);
       if (err.response.status === 401) {
         return false;
       }
@@ -45,7 +42,6 @@ const UserProvider = (props) => {
   };
 
   const logout = async () => {
-    console.log("logout");
     try {
       const res = await axios.post(
         "http://localhost:4000/user/logout/",
@@ -54,7 +50,7 @@ const UserProvider = (props) => {
           withCredentials: true,
         }
       );
-      console.log(res.data);
+
       setIsLoggedIn(undefined);
     } catch (err) {
       console.log(err);
