@@ -18,7 +18,8 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    
+    // Validation for the form
     const loginForm = event.currentTarget;
     if (loginForm.checkValidity() === false) {
       event.preventDefault();
@@ -62,6 +63,7 @@ export default function Login() {
       <div className="background-login-box">
         <h2>Logga in</h2>
 
+        {/* Login form */}
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="12" controlId="validation1">
