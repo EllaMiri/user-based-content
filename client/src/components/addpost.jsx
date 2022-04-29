@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../contexts/userContext";
 
 export default function AddPost() {
-
   const context = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const timeElapsed = Date.now();
@@ -23,7 +22,6 @@ export default function AddPost() {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = async (event) => {
-    
     axios.interceptors.response.use(
       (response) => {
         return response;
@@ -208,7 +206,6 @@ export default function AddPost() {
         Ny annons
       </Button>
       <Collapse in={open}>
-
         {/* Form for add a post */}
         <div id="example-collapse-text" className="addPostContainer">
           <Form

@@ -11,17 +11,7 @@ const UserProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
   const login = async (username, password) => {
-    /* axios.interceptors.response.use(
-       (response) => {
-         return response;
-       },
-       (error) => {
-         if (error.response.status === 401) {
-           toast.error("Wrong password or username!");
-         }
-         return error;
-       }
-     ); */
+
     try {
       const res = await axios.post(
         "http://localhost:4000/user/login/",
