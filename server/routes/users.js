@@ -89,7 +89,7 @@ routes.delete("/:id", async (req, res) => {
 
 routes.post("/login", async (req, res) => {
   req.session.user = undefined;
-  
+
   const foundUser = await userModel
     .findOne({ username: req.body.username })
     .select("+password");
@@ -127,7 +127,7 @@ routes.get("/login", (req, res) => {
 
 routes.post("/logout", (req, res) => {
   console.log("INNAN INOGGAD", req.session);
-  // req.session.user = null;
+  req.session = null;
   res.send("Logged out!");
 });
 
