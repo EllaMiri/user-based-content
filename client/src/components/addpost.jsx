@@ -305,6 +305,7 @@ export default function AddPost() {
                   <h4>{post.title}</h4>
                   <p>{post.text}</p>
                   <p className="postDate">{today.toLocaleDateString()}</p>
+                  <h6>Kontakt: {post.user.email}</h6>
                 </div>
               </>
             )}
